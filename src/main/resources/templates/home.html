@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Sitting Arrangement System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+<!-- College Header -->
+<div class="college-header py-3 bg-danger bg-opacity-10">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
+            <img th:src="@{/images/logo.png}"
+                 alt="College Logo"
+                 class="college-logo me-3" height="80">
+
+            <div>
+                <h3 class="mb-0 fw-bold">PROGRESSIVE EDUCATION SOCIETY'S</h3>
+                <h1 class="mb-0 fw-bold">
+                    Modern College of Arts, Science and Commerce
+                </h1>
+                <small>Ganeshkhind, Pune</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-info shadow-lg sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-primary" th:href="@{/}">
+            🎓 Modern College
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="#features">Features</a>
+                </li>
+
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-primary btn-sm"
+                       th:href="@{/admin/login}">
+                        Admin Login
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-2">
+                    <a class="btn btn-danger btn-sm"
+                       th:href="@{/student/login}">
+                        Student Login
+                    </a>
+                </li>
+                 <!--
+                <li class="nav-item ms-lg-2">
+                    <a class="btn btn-success btn-sm"
+                       th:href="@{/faculty/login}">
+                        Faculty Login
+                    </a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center bg-danger bg-opacity-11 py-5">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+
+           <!-- <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <img th:src="@{/images/back.png}"
+                     alt="Exam Illustration"
+                     class="img-fluid hero-img">
+            </div>-->
+       
+            <div class="col-lg-12 text-center text-lg-end">
+                <h1 class="fw-bold mb-3 text-danger">
+                    Exam Sitting Arrangement System
+                </h1>
+                <p class="text-muted mb-4">
+                    Automated system for efficient and conflict-free exam seating arrangements.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="py-5">
+    <div class="container-fluid">
+        <h2 class="text-center fw-bold mb-5">Key Features</h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4 col-lg-3">
+                <div class="feature-card text-center p-4 bg-success bg-opacity-10 rounded-4">
+                    <img th:src="@{/images/sitting.png}" width="200" height="200">
+                    <h5 class="fw-bold mt-3">Automated Seating</h5>
+                    <p class="text-muted">
+                        Automatically allocates students to available seats.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="feature-card text-center p-4 bg-info bg-opacity-10 rounded-4">
+                    <img th:src="@{/images/add.png}" width="200" height="200">
+                    <h5 class="fw-bold mt-3">Admin Dashboard</h5>
+                    <p class="text-muted">
+                        Manage exams, students, halls and seating arrangements.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="feature-card text-center p-4 bg-warning bg-opacity-10 rounded-4">
+                    <img th:src="@{/images/student.png}" width="200" height="200">
+                    <h5 class="fw-bold mt-3">Student Dashboard</h5>
+                    <p class="text-muted">
+                        View exam schedule, hall and seat number.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <div class="feature-card text-center p-4 bg-primary bg-opacity-10 rounded-4">
+                    <img th:src="@{/images/faculty.jpg}" width="200" height="200">
+                    <h5 class="fw-bold mt-3">Faculty Dashboard</h5>
+                    <p class="text-muted">
+                        View hall allocation and student lists.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Footer 
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-1">© 2026 Exam Sitting Arrangement System</p>
+        <small>College Project | Java + Spring Boot</small>
+    </div>
+</footer>-->
+<!-- ================= ENHANCED FOOTER ================= -->
+<footer class="bg-dark text-white pt-5 pb-3">
+
+    <div class="container-fluid">
+
+        <div class="row text-center text-md-start">
+
+            <!-- 🎓 College Info -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">🎓 Modern College</h5>
+                <p class="small mb-1">
+                    Progressive Education Society's
+                </p>
+                <p class="small mb-1">
+                    Modern College of Arts, Science & Commerce
+                </p>
+                <p class="small">
+                    Ganeshkhind, Pune, Maharashtra
+                </p>
+                <p class="small text-muted">
+                    Smart solution for managing exam seating efficiently and securely.
+                </p>
+            </div>
+
+            <!-- 🔗 Quick Links -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">🔗 Quick Links</h5>
+                <ul class="list-unstyled small">
+                    <li><a th:href="@{/}" class="text-white text-decoration-none">Home</a></li>
+                    <li><a href="#features" class="text-white text-decoration-none">Features</a></li>
+                    <li><a th:href="@{/admin/login}" class="text-white text-decoration-none">Admin Login</a></li>
+                    <li><a th:href="@{/student/login}" class="text-white text-decoration-none">Student Login</a></li>
+                   <!-- <li><a th:href="@{/faculty/login}" class="text-white text-decoration-none">Faculty Login</a></li>-->
+                </ul>
+            </div>
+
+            <!-- 📞 Contact + Social -->
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">📞 Contact Us</h5>
+
+                <p class="small mb-1">
+                    <i class="bi bi-envelope"></i> info@moderncollege.edu
+                </p>
+
+                <p class="small mb-1">
+                    <i class="bi bi-telephone"></i> +91 9876543210
+                </p>
+
+                <p class="small mb-2">
+                    <i class="bi bi-geo-alt"></i> Pune, Maharashtra, India
+                </p>
+
+                <!-- 🌐 Social Icons -->
+                <div>
+                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                </div>
+
+                <p class="small text-success mt-2">
+                    ● System Status: Active
+                </p>
+            </div>
+
+        </div>
+
+        <hr class="border-light">
+
+        <!-- Bottom -->
+        <div class="text-center small">
+            © 2026 Exam Sitting Arrangement System | Developed using Java + Spring Boot
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

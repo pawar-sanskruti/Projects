@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seating Arrangement</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body { background: white; font-size: 14px; }
+        .main-box { border: 1px solid black; }
+        .header { text-align: center; font-weight: bold; background: #d9ead3; border-bottom: 1px solid black; }
+        .sub-header { text-align: center; font-weight: bold; background: #e2f0d9; border-bottom: 1px solid black; }
+        .info-row { border-bottom: 1px solid black; padding: 5px; }
+        .info-row span { color: red; font-weight: bold; }
+        table { width: 100%; }
+        th, td { border: 1px solid black; text-align: center; padding: 5px; }
+        th { background: #f2f2f2; font-style: italic; }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-3 main-box">
+
+    <!-- HEADER -->
+    <div class="header p-2">
+        <div>Modern College of ASC, Ganeshkhind, Pune 16</div>
+        <div th:text="${seatingList[0]['exam_name']}"></div>
+    </div>
+
+    <div class="sub-header p-1">
+        <span th:text="${seatingList[0]['session']}"></span> Session (NEP)
+    </div>
+
+    <!-- SAFE VARIABLE EXTRACTION 
+    <th:block th:with="
+        class1=${seatingList[0]['class_name']},
+        subject1=${seatingList[0]['subject_name']},
+        code1=${seatingList[0]['subject_code']},
+
+        class2=${seatingList.size() > 1 ? seatingList[1]['class_name'] : null},
+        subject2=${seatingList.size() > 1 ? seatingList[1]['subject_name'] : null},
+        code2=${seatingList.size() > 1 ? seatingList[1]['subject_code'] : null}
+    ">
+-->
+<!--
+<th:block th:with="
+    class1=${seatingList[0]['class_name']},
+    subject1=${seatingList[0]['subject_name']},
+    code1=${seatingList[0]['subject_code']},
+    sem1=${seatingList[0]['semester']},
+
+    class2=${#lists.size(seatingList.?[class_name != class1]) > 0 ? seatingList.?[class_name != class1][0]['class_name'] : null},
+    subject2=${#lists.size(seatingList.?[class_name != class1]) > 0 ? seatingList.?[class_name != class1][0]['subject_name'] : null},
+    code2=${#lists.size(seatingList.?[class_name != class1]) > 0 ? seatingList.?[class_name != class1][0]['subject_code'] : null},
+    sem2=${#lists.size(seatingList.?[class_name != class1]) > 0 ? seatingList.?[class_name != class1][0]['semester'] : null}
+">
+   
+    <div class="row info-row">
+        <div class="col-md-4">
+            Date : <span th:text="${seatingList[0]['exam_date']}"></span>
+        </div>
+
+        <div class="col-md-8">
+            Class :
+            <span th:text="${class1}"></span>
+            <span th:if="${class2 != null}">
+                , <span th:text="${class2}"></span>
+            </span>
+        </div>
+    </div>
+
+   
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sub :
+            <span th:text="${subject1}"></span>
+            <span th:if="${subject2 != null}">
+                , <span th:text="${subject2}"></span>
+            </span>
+        </div>
+
+        <div class="col-md-6 text-end">
+            Room No :
+            <span th:text="${seatingList[0]['hall_name']}"></span>
+        </div>
+    </div>
+
+   
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sub Code :-
+            <span th:text="${code1}"></span>
+            <span th:if="${code2 != null}">
+                , <span th:text="${code2}"></span>
+            </span>
+        </div>
+
+        <div class="col-md-6 text-end">
+            Time :
+            <span th:text="${seatingList[0]['start_time']} + ' to ' + ${seatingList[0]['end_time']}"></span>
+        </div>
+    </div>
+
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sem :- <span th:text="${seatingList[0]['semester']}"></span>
+        </div>
+        <div class="col-md-6 text-end">
+            Total <span th:text="${seatingList.size()}"></span>
+        </div>
+    </div>
+
+    </th:block>-->
+
+    <!-- TABLE -->
+	<th:block th:with="
+	    class1=${seatingList[0]['class_name']},
+	    subject1=${seatingList[0]['subject_name']},
+	    code1=${seatingList[0]['subject_code']},
+	    sem1=${seatingList[0]['semester']}
+	">
+
+	    <!-- FIND SECOND CLASS -->
+	    <th:block th:with="
+	        class2=null,
+	        subject2=null,
+	        code2=null,
+	        sem2=null
+	    ">
+
+	        <th:block th:each="row : ${seatingList}">
+	            <th:block th:if="${row['class_name'] != class1}">
+	                <th:block th:with="
+	                    class2=${row['class_name']},
+	                    subject2=${row['subject_name']},
+	                    code2=${row['subject_code']},
+	                    sem2=${row['semester']}
+	                ">
+	                </th:block>
+	            </th:block>
+	        </th:block>
+
+	        <!-- NOW USE VALUES -->
+
+	        <!-- ROW 1 -->
+	        <div class="row info-row">
+	            <div class="col-md-4">
+	                Date : <span th:text="${seatingList[0]['exam_date']}"></span>
+	            </div>
+
+	            <div class="col-md-8">
+	                Class :
+	                <span th:text="${class1}"></span>
+	                <span th:if="${class2 != null}">
+	                    , <span th:text="${class2}"></span>
+	                </span>
+	            </div>
+	        </div>
+
+	        <!-- ROW 2 -->
+	        <div class="row info-row">
+	            <div class="col-md-6">
+	                Sub :
+	                <span th:text="${subject1}"></span>
+	                <span th:if="${subject2 != null}">
+	                    , <span th:text="${subject2}"></span>
+	                </span>
+	            </div>
+
+	            <div class="col-md-6 text-end">
+	                Room No :
+	                <span th:text="${seatingList[0]['hall_name']}"></span>
+	            </div>
+	        </div>
+
+	        <!-- ROW 3 -->
+	        <div class="row info-row">
+	            <div class="col-md-6">
+	                Sub Code :-
+	                <span th:text="${code1}"></span>
+	                <span th:if="${code2 != null}">
+	                    , <span th:text="${code2}"></span>
+	                </span>
+	            </div>
+
+	            <div class="col-md-6 text-end">
+	                Time :
+	                <span th:text="${seatingList[0]['start_time']} + ' to ' + ${seatingList[0]['end_time']}"></span>
+	            </div>
+	        </div>
+
+	        <!-- ROW 4 -->
+	        <div class="row info-row">
+	            <div class="col-md-6">
+	                Sem :-
+	                <span th:text="${sem1}"></span>
+	                <span th:if="${sem2 != null}">
+	                    , <span th:text="${sem2}"></span>
+	                </span>
+	            </div>
+
+	            <div class="col-md-6 text-end">
+	                Total <span th:text="${seatingList.size()}"></span>
+	            </div>
+	        </div>
+
+	    </th:block>
+	</th:block>
+    <table>
+        <thead>
+        <tr>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="i : ${#numbers.sequence(0, (seatingList.size()/3) + (seatingList.size()%3==0?0:1) - 1)}">
+
+            <td th:text="${seatingList[i]['seat_no']}"></td>
+            <td th:text="${seatingList[i]['roll_no'] != null ? seatingList[i]['roll_no'] : 'EMPTY'}"></td>
+
+            <td th:text="${i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+                         ? ${seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['seat_no']} : ''"></td>
+
+            <td th:text="${i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+                         ? ${seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['roll_no'] != null 
+                         ? seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['roll_no'] : 'EMPTY'} : ''"></td>
+
+            <td th:text="${i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+                         ? ${seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['seat_no']} : ''"></td>
+
+            <td th:text="${i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+                         ? ${seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['roll_no'] != null 
+                         ? seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))]['roll_no'] : 'EMPTY'} : ''"></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
+
+<!--
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seating Arrangement</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: white;
+            font-size: 14px;
+        }
+
+        .main-box {
+            border: 1px solid black;
+        }
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+            background: #d9ead3;
+            border-bottom: 1px solid black;
+        }
+
+        .sub-header {
+            text-align: center;
+            font-weight: bold;
+            background: #e2f0d9;
+            border-bottom: 1px solid black;
+        }
+
+        .info-row {
+            border-bottom: 1px solid black;
+            padding: 5px;
+        }
+
+        .info-row span {
+            color: red;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+
+        th {
+            background: #f2f2f2;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-3 main-box">
+
+    
+    <div class="header p-2">
+        <div>Modern College of ASC, Ganeshkhind, Pune 16</div>
+        <div th:text="${seatingList[0].exam_name}"></div>
+    </div>
+
+    <div class="sub-header p-1">
+        <span th:text="${seatingList[0].session}"></span> Session (NEP)
+    </div>
+
+   
+    <div class="row info-row">
+        <div class="col-md-4">
+            Date : <span th:text="${seatingList[0].exam_date}"></span>
+        </div>
+        <div class="col-md-4">
+            Class : <span th:text="${seatingList[0].class_name}"></span>
+        </div>
+        <div class="col-md-4 text-end">
+            
+        </div>
+    </div>
+
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sub : <span th:text="${seatingList[0].subject_name}"></span>
+        </div>
+        <div class="col-md-6 text-end">
+            Room No : <span th:text="${seatingList[0].hall_name}"></span>
+        </div>
+    </div>
+
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sub Code :- <span th:text="${seatingList[0].subject_code}"></span>
+        </div>
+        <div class="col-md-6 text-end">
+            Time :
+            <span th:text="${seatingList[0].start_time} + ' to ' + ${seatingList[0].end_time}"></span>
+        </div>
+    </div>
+
+    <div class="row info-row">
+        <div class="col-md-6">
+            Sem :- <span th:text="${seatingList[0].semester}"></span>
+        </div>
+        <div class="col-md-6 text-end">
+            Total <span th:text="${seatingList.size()}"></span>
+        </div>
+    </div>
+
+    
+    <table>
+        <thead>
+        <tr>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+            <th>R.No./ Ben. No</th>
+            <th>Seat No</th>
+        </tr>
+        </thead>
+      
+		<tbody>
+
+		
+		<tr th:each="i : ${#numbers.sequence(0, (seatingList.size()/3) + (seatingList.size()%3==0?0:1) - 1)}">
+
+		    
+		    <td th:text="${seatingList[i].seat_no}"></td>
+		    <td th:text="${seatingList[i].roll_no != null ? seatingList[i].roll_no : 'EMPTY'}"></td>
+
+		   
+		    <td th:text="${i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+		                 ? ${seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].seat_no} : ''"></td>
+
+		    <td th:text="${i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+		                 ? ${seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].roll_no != null 
+		                 ? seatingList[i + ((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].roll_no : 'EMPTY'} : ''"></td>
+
+		    
+		    <td th:text="${i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+		                 ? ${seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].seat_no} : ''"></td>
+
+		    <td th:text="${i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1)) < seatingList.size()} 
+		                 ? ${seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].roll_no != null 
+		                 ? seatingList[i + 2*((seatingList.size()/3) + (seatingList.size()%3==0?0:1))].roll_no : 'EMPTY'} : ''"></td>
+
+		</tr>
+
+		</tbody>
+		
+		 
+		
+    </table>
+
+</div>
+
+</body>
+</html>
+-->

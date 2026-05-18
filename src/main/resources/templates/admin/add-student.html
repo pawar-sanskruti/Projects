@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Student</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+        }
+
+        .card {
+            border-radius: 20px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+        }
+
+        .btn-primary, .btn-success {
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .title-icon {
+            font-size: 30px;
+            color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 850px;">
+
+        <!-- HEADER -->
+        <div class="text-center mb-3">
+            <i class="bi bi-person-plus-fill title-icon"></i>
+            <h3 class="mt-2">Add Student</h3>
+            <p class="text-muted">Fill student details below</p>
+        </div>
+
+        <!-- ✅ SUCCESS / ERROR MESSAGE -->
+        <div th:if="${success}" class="alert alert-success text-center" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger text-center" th:text="${error}"></div>
+
+        <!-- FORM -->
+        <form th:action="@{/admin/save-student}" th:object="${student}" method="post">
+
+            <!-- ROW 1 -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Roll Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                        <input type="text" th:field="*{rollNo}" class="form-control" placeholder="Enter Roll No" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Name</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <input type="text" th:field="*{name}" class="form-control" placeholder="Enter Name" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2 -->
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                        <input type="password" th:field="*{password}" class="form-control" placeholder="Enter Password">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 3 -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Admission Status</label>
+                    <select th:field="*{admissionStatus}" class="form-select" required>
+                        <option value="">Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Division</label>
+                    <input type="text" th:field="*{division}" class="form-control" placeholder="A / B / C">
+                </div>
+            </div>
+
+            <!-- ROW 4 -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Gender</label>
+                    <select th:field="*{gender}" class="form-select" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Library ID</label>
+                    <input type="number" th:field="*{libraryId}" class="form-control" placeholder="Enter Library ID">
+                </div>
+            </div>
+
+            <!-- ROW 5 - CLASS -->
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Class</label>
+
+                    <select th:field="*{classEntity.classId}" class="form-select" required>
+                        <option value="">Select Class</option>
+
+                        <option th:each="c : ${classList}"
+                                th:value="${c.classId}"
+                                th:text="${c.className}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="d-grid mt-3">
+                <button class="btn btn-primary btn-lg">
+                    <i class="bi bi-save"></i> Save Student
+                </button>
+            </div>
+
+        </form>
+
+        <!-- CSV BUTTON -->
+        <div class="text-center mt-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                <i class="bi bi-upload"></i> Upload CSV
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal fade" id="uploadModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Upload Students CSV</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form th:action="@{/admin/students/upload}" method="post" enctype="multipart/form-data">
+
+                <div class="modal-body">
+                    <input type="file" name="file" class="form-control" accept=".csv" required>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary">
+                        <i class="bi bi-upload"></i> Upload
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

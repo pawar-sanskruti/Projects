@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Exams</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark px-4">
+    <span class="navbar-brand">📅 Exam Schedule</span>
+    <a th:href="@{/student/dashboard}" class="btn btn-light btn-sm">Back</a>
+</nav>
+
+<div class="container mt-4">
+
+    <!-- Student Info -->
+    <div class="card shadow p-3 mb-4">
+        <h5 class="mb-1">👋 Welcome</h5>
+        <h4 class="text-primary fw-bold" th:text="${student.name}"></h4>
+        <p class="mb-0">
+            Dept: <span th:text="${student.department.deptName}"></span>
+        </p>
+    </div>
+
+    <!-- Exams Section -->
+    <div class="row g-4">
+
+        <div class="col-md-4" th:each="exam : ${exams}">
+            <div class="card shadow h-100 border-0">
+
+                <!-- Header -->
+                <div class="card-header bg-primary text-white">
+                    <h5 th:text="${exam.subjectName}"></h5>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body">
+
+                    <p>
+                        📅 <strong>Date:</strong>
+                        <span th:text="${exam.examDate}"></span>
+                    </p>
+
+                    <p>
+                        ⏰ <strong>Time:</strong>
+                        <span th:text="${exam.examTime}"></span>
+                    </p>
+
+                    <p>
+                        🎓 <strong>Semester:</strong>
+                        <span th:text="${exam.semester}"></span>
+                    </p>
+
+                    <p>
+                        🏫 <strong>Department:</strong>
+						<span th:text="${exam.department.deptName}"></span>
+                    </p>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-center">
+                    <a th:href="@{/student/seat(examId=${exam.examId})}"
+                       class="btn btn-success btn-sm">
+                        View Seat
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- No Exams -->
+    <div th:if="${#lists.isEmpty(exams)}" class="text-center mt-5">
+        <h4 class="text-muted">No exams scheduled</h4>
+    </div>
+
+</div>
+
+</body>
+</html>
